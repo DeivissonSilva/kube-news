@@ -49,7 +49,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: deivisson/kube-news:v1
+        image: deivisson/kube-news:{{TAG}}
         ports:
           - containerPort: 8080
         env:
