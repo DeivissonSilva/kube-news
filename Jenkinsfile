@@ -20,5 +20,17 @@ pipeline
                 }
             }
         }
+
+        stage ('Deploy Kubernetes') {
+            environment {
+                tag_version = "${env.BUILD_ID}"
+            }
+            steps {
+                withKubeConfig([credentialsId: 'kubeconfig']) {
+                    sh 'sed -i "s/{{TAG}}/$tag_version/g" ./src/deployment.yml'
+                    sh 'kubectl apply -f ./src/deployment.yml'
+                }
+            }
+        }
     }
 }
